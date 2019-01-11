@@ -3,6 +3,8 @@ const sha256 = require('sha256');
 function TinaBlockchain() {
   this.chain = [];
   this.pendingTransactions = [];
+
+  this.createNewBlock(0, 'bigBangBlock', 'genesisBlock');
 }
 
 TinaBlockchain.prototype.createNewBlock = function(
@@ -59,8 +61,19 @@ TinaBlockchain.prototype.hashBlock = function(
   return hash;
 };
 
-TinaBlockchain.prototype.proofOfWork = function(previousBlockHash, currentBlockData) {
-    
-}
+TinaBlockchain.prototype.proofOfWork = function(
+  previousBlockHash,
+  currentBlockData
+) {
+  let nonce = 0;
+  let hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
+
+  while (hash.substring(0, 4) !== '0000') {
+    nonce++;
+    hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
+  }
+
+  return nonce;
+};
 
 module.exports = TinaBlockchain;
