@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/KelvinCampelo/blockchain/issues"
   },
-  "homepage": "https://github.com/KelvinCampelo/blockchain#readme"
+  "homepage": "https://github.com/KelvinCampelo/blockchain#readme",
+  "dependencies": {
+    "sha256": "^0.2.0"
+  }
 }
