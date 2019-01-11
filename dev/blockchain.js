@@ -1,9 +1,9 @@
-function Tina() {
+function TinaBlockchain() {
   this.chain = [];
   this.newTransactions = [];
 }
 
-Tina.prototype.createNewBlock = (nonce, previousBlockHash, hash) => {
+TinaBlockchain.prototype.createNewBlock = function(nonce, previousBlockHash, hash) {
   const newBlock = {
     index: this.chain.length + 1,
     timestamp: Date.now(),
@@ -13,8 +13,14 @@ Tina.prototype.createNewBlock = (nonce, previousBlockHash, hash) => {
     previousBlockHash
   };
 
-  this.newTransactions = []
-  this.chain.push(newBlock)
+  this.newTransactions = [];
+  this.chain.push(newBlock);
 
   return newBlock;
 };
+
+TinaBlockchain.prototype.getLastBlock = function() {
+    return this.chain[this.chain.length - 1]
+}
+
+module.exports = TinaBlockchain;
