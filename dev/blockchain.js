@@ -1,8 +1,13 @@
 const sha256 = require('sha256');
+const uuid = require('uuid/v1');
+const currentNodeUrl = process.argv[3];
 
 function TinaBlockchain() {
   this.chain = [];
   this.pendingTransactions = [];
+
+  this.currentNodeUrl = currentNodeUrl;
+  this.networkNodes = [];
 
   this.createNewBlock(0, 'bigBangBlock', 'genesisBlock');
 }
@@ -39,10 +44,19 @@ TinaBlockchain.prototype.createNewTransaction = function(
   const newTransaction = {
     amount,
     sender,
-    recipient
+    recipient,
+    transactionId: uuid()
+      .split('-')
+      .join('')
   };
 
-  this.pendingTransactions.push(newTransaction);
+  return newTransaction;
+};
+
+TinaBlockchain.prototype.addTransactionToPendingTransactions = function(
+  transactionObject
+) {
+  this.pendingTransactions.push(transactionObject);
 
   return this.getLastBlock()['index'] + 1;
 };
