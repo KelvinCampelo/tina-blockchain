@@ -88,7 +88,7 @@ app.get('/mine', (req, res) => {
                 body: {
                     amount: 12.5,
                     sender: '00',
-                    nodeAddress,
+                    recipient: nodeAddress,
                 },
                 json: true,
             };
@@ -229,6 +229,28 @@ app.get('/consensus', (req, res) => {
                 chain: tina.chain,
             });
         }
+    });
+});
+
+app.get('/blocks/:blockHash', (req, res) => {
+    const block = tina.getBlock(req.params.blockHash);
+    res.json({ block });
+});
+
+app.get('/transactions/:transactionId', (req, res) => {
+    const transactionId = req.params.transactionId;
+    const trasactionData = tina.getTransaction(transactionId);
+    res.json({
+        transaction: trasactionData.transaction,
+        block: trasactionData.block,
+    });
+});
+
+app.get('/address/:address', (req, res) => {
+    const address = req.params.address;
+    const addressData = tina.getAddressData(address);
+    res.json({
+        addressData: addressData,
     });
 });
 
